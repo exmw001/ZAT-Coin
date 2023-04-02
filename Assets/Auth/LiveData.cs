@@ -33,6 +33,8 @@ public class LiveData : MonoBehaviour
             _Image.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
             _Image.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
             _Image.SetNativeSize();
+            
+            
         }
     }*/
 }
