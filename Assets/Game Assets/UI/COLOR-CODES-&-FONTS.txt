@@ -1,0 +1,11 @@
+poppins
+
+family: semibold & bold
+
+Button-Gradient
+#B7B7B7
+#FFFFFF
+
+0nboarding
+#106067
+#12716F

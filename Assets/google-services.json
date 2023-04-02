@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "142479014353",
+    "firebase_url": "https://coin-6388d-default-rtdb.firebaseio.com",
+    "project_id": "coin-6388d",
+    "storage_bucket": "coin-6388d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142479014353:android:42c646108cacb3538fc8f0",
+        "android_client_info": {
+          "package_name": "com.zat.plimms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142479014353-nifjj8qouhedgne3g69bu4u6gpo4q588.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDGF4OE8KFj63A5scjRQCjhqnIAwEBY40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "142479014353-nifjj8qouhedgne3g69bu4u6gpo4q588.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
