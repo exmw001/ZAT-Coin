@@ -53,16 +53,16 @@ public class RealTimeDatabase : MonoBehaviour
     {
         StartCoroutine(GetValue((string name) =>
         {
-            LiveData.data.Levels.Coins = Int16.Parse(name);
-            Debug.Log(LiveData.data.Levels.Coins);
+            LiveData.data.userData.Coins = Int16.Parse(name);
+            Debug.Log(LiveData.data.userData.Coins);
             ReadData();
         }));
     }
 
     public void subtractCoin()
     {
-        LiveData.data.Levels.Coins--;
-        reference.Child(LiveData.data.userID).SetValueAsync(LiveData.data.Levels.Coins);
+        LiveData.data.userData.Coins--;
+        reference.Child(LiveData.data.userID).SetValueAsync(LiveData.data.userData.Coins);
         ReadData();
     }
     IEnumerator GetValue(Action<string> oncallback)
@@ -151,13 +151,13 @@ public class RealTimeDatabase : MonoBehaviour
     public void CreateUser(string id, string UID)
     {
         loading.SetActive(true);
-        _userID = id;
+        _userID = UID;
 
         LiveData.data.userID = _userID;
-        LiveData.data.Levels.Coins = 2;
-        LiveData.data.Levels.Earnings = 0;
-        LiveData.data.Levels.Token = UID;
-        string json = JsonUtility.ToJson(LiveData.data.Levels);
+        LiveData.data.userData.Coins = 2;
+        LiveData.data.userData.Earnings = 0;
+        LiveData.data.userData.Token = id;
+        string json = JsonUtility.ToJson(LiveData.data.userData);
         reference.Child("Users").Child(id).SetRawJsonValueAsync(json);
         if (showProductEvent == null)
             showProductEvent = new UnityEvent();
@@ -234,7 +234,7 @@ public class RealTimeDatabase : MonoBehaviour
         var _p = LiveData.data.DataList[levelCounter];
 
         Levels _levels = new Levels();
-        LiveData.data.Levels.levelData.Add(_levels);
+        LiveData.data.userData.Levels.Add(_levels);
 
         for (int i = 0; i < _p._productName.Count; i++)
         {

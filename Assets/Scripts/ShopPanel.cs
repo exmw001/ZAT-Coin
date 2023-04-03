@@ -40,7 +40,7 @@ public class ShopPanel : MonoBehaviour
     }
     private void Update()
     {
-        remamingcoins.text = LiveData.data.Levels.Coins.ToString();
+        remamingcoins.text = LiveData.data.userData.Coins.ToString();
     }
     #region Products
     public void Board1()

@@ -3809,17 +3809,17 @@ MonoBehaviour:
   - LevelName: Level_8
     _productName: []
     _productimage: []
-  Levels:
+  userData:
     Coins: 0
     Earnings: 0
     levelData:
-    - LevelName: level 1
+    - LevelName: 
       _pName:
-      - _pName: p 1
+      - _pName: 
         Quantity: 0
-      - _pName: p 2
-        Quantity: 0
-    - LevelName: level 2
+    - LevelName: 
+      _pName: []
+    - LevelName: 
       _pName: []
     Token: 
 --- !u!4 &1863107133

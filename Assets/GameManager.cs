@@ -78,18 +78,18 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             //Rand = Random.Range(0, Level_1.Count);
-            Rand = Random.Range(0, LiveData.data.Levels.levelData[0]._pName.Count);
+            Rand = Random.Range(0, LiveData.data.userData.Levels[0]._pName.Count);
             while (vs.Contains(Rand))
             {
                 //Rand = Random.Range(0, Level_1.Count);
-                Rand = Random.Range(0, LiveData.data.Levels.levelData[0]._pName.Count);
+                Rand = Random.Range(0, LiveData.data.userData.Levels[0]._pName.Count);
             }
 
             vs.Add(Rand);
-            _pNames.Add(LiveData.data.Levels.levelData[0]._pName[Rand]._pName);
+            _pNames.Add(LiveData.data.userData.Levels[0]._pName[Rand]._pName);
             for (int j = 0; j < LiveData.data.DataList[0]._productName.Count; j++)
             {
-                if (LiveData.data.Levels.levelData[0]._pName[Rand]._pName == LiveData.data.DataList[0]._productName[j])
+                if (LiveData.data.userData.Levels[0]._pName[Rand]._pName == LiveData.data.DataList[0]._productName[j])
                 {
                     ProductsTexture.Add(LiveData.data.DataList[0]._productimage[j]);
                     break;
@@ -103,10 +103,10 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             //Rand = Random.Range(0, Level_2.Count);
-            Rand = Random.Range(0, LiveData.data.Levels.levelData[1]._pName.Count);
+            Rand = Random.Range(0, LiveData.data.userData.Levels[1]._pName.Count);
             while (_vs.Contains(Rand))
             {
-                Rand = Random.Range(0, LiveData.data.Levels.levelData[1]._pName.Count);
+                Rand = Random.Range(0, LiveData.data.userData.Levels[1]._pName.Count);
                 //Rand = Random.Range(0, Level_2.Count);
             }
             _vs.Add(Rand);
@@ -115,12 +115,12 @@ public class GameManager : MonoBehaviour
 
         //Add 1 products from Level_3
         //Rand = Random.Range(0, Level_3.Count);
-        Rand = Random.Range(0, LiveData.data.Levels.levelData[2]._pName.Count);
+        Rand = Random.Range(0, LiveData.data.userData.Levels[2]._pName.Count);
         Products.Add(Level_3[Rand]);
 
         //Add 1 products from Level_4
         //Rand = Random.Range(0, Level_4.Count);
-        Rand = Random.Range(0, LiveData.data.Levels.levelData[3]._pName.Count);
+        Rand = Random.Range(0, LiveData.data.userData.Levels[3]._pName.Count);
         Products.Add(Level_4[Rand]);
 
         //Add 1 products to load next Board

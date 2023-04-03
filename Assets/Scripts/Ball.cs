@@ -40,7 +40,7 @@ public class Ball : MonoBehaviour
     public void gamePlay()
     {
         //if(RealTimeDatabase.coins > 0)
-        if(LiveData.data.Levels.Coins > 0)
+        if(LiveData.data.userData.Coins > 0)
         {
             ShopButton.interactable = WonButton.interactable = false;
             move = false;
@@ -80,7 +80,7 @@ public class Ball : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Panel.SetActive(true);
         RealTimeDatabase.instance.subtractCoin();
-        if (LiveData.data.Levels.Coins > 0)
+        if (LiveData.data.userData.Coins > 0)
         {
             yield return new WaitForSeconds(2f);
             SceneManager.LoadScene(0);

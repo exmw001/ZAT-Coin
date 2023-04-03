@@ -8,7 +8,7 @@ public class LiveData : MonoBehaviour
     public static LiveData data;
     public string userID;
     public List<Data> DataList;
-    public UserData Levels = new UserData();
+    public UserData userData = new UserData();
     //public RawImage _Image;
     private void Awake()
     {
@@ -44,7 +44,7 @@ public class UserData
 {
     public int Coins;
     public int Earnings;
-    public List<Levels> levelData = new List<Levels>();
+    public List<Levels> Levels = new List<Levels>();
     public string Token;
 }
 [Serializable]
