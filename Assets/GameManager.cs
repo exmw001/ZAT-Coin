@@ -78,17 +78,13 @@ public class GameManager : MonoBehaviour
         List<int> vs = new List<int>();
         for (int i = 0; i < 2; i++)
         {
-            //Rand = Random.Range(0, Level_1.Count);
             Rand = Random.Range(0, LiveData.data.userData.Levels[0]._pName.Count);
             while (vs.Contains(Rand))
             {
-                //Rand = Random.Range(0, Level_1.Count);
                 Rand = Random.Range(0, LiveData.data.userData.Levels[0]._pName.Count);
             }
             vs.Add(Rand);
             ProductsNames.Add(LiveData.data.userData.Levels[0]._pName[Rand]._pName);
-            //_pNames.Add(LiveData.data.userData.Levels[0]._pName[Rand]._pName);
-            //Products.Add(Level_1[Rand]);
             ProductsTexture.Add(LiveData.data.DataList[0]._productimage[vs[i]]);
         }
 
@@ -111,24 +107,19 @@ public class GameManager : MonoBehaviour
         }
 
         //Add 1 products from Level_3
-        //Rand = Random.Range(0, Level_3.Count);
         Rand = Random.Range(0, LiveData.data.userData.Levels[2]._pName.Count);
-        ProductsNames.Add(LiveData.data.userData.Levels[1]._pName[Rand]._pName);
-        ProductsTexture.Add(LiveData.data.DataList[1]._productimage[_vs[Rand]]);
+        ProductsNames.Add(LiveData.data.userData.Levels[2]._pName[Rand]._pName);
+        ProductsTexture.Add(LiveData.data.DataList[1]._productimage[Rand]);
         //Products.Add(Level_3[Rand]);
 
         //Add 1 products from Level_4
-        //Rand = Random.Range(0, Level_4.Count);
         Rand = Random.Range(0, LiveData.data.userData.Levels[3]._pName.Count);
-        ProductsNames.Add(LiveData.data.userData.Levels[1]._pName[Rand]._pName);
-        ProductsTexture.Add(LiveData.data.DataList[1]._productimage[_vs[Rand]]);
-        //Products.Add(Level_4[Rand]);
+        ProductsNames.Add(LiveData.data.userData.Levels[3]._pName[Rand]._pName);
+        ProductsTexture.Add(LiveData.data.DataList[1]._productimage[Rand]);
 
         //Add 1 products to load next Board
-        //Products.Add(Next);
         ProductsTexture.Add(NextTexture);
         //Add 1 products to load next Board
-        //Products.Add(Next);
         ProductsTexture.Add(NextTexture);
 
         //Baskets fill with random items from products list 
