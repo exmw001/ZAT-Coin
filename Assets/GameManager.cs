@@ -20,8 +20,10 @@ public class GameManager : MonoBehaviour
 
     public List<Sprite> Products;
     public List<Texture2D> ProductsTexture;
+    public List<string> ProductsNames;
 
     public Sprite Next;
+    public Texture2D NextTexture;
     int Rand;
     public List<int> list = new List<int>();
     public static GameManager instance;
@@ -74,7 +76,6 @@ public class GameManager : MonoBehaviour
     {
         //Add 2 products from Level_1
         List<int> vs = new List<int>();
-        List<string> _pNames = new List<string>();
         for (int i = 0; i < 2; i++)
         {
             //Rand = Random.Range(0, Level_1.Count);
@@ -84,22 +85,16 @@ public class GameManager : MonoBehaviour
                 //Rand = Random.Range(0, Level_1.Count);
                 Rand = Random.Range(0, LiveData.data.userData.Levels[0]._pName.Count);
             }
-
             vs.Add(Rand);
-            _pNames.Add(LiveData.data.userData.Levels[0]._pName[Rand]._pName);
-            for (int j = 0; j < LiveData.data.DataList[0]._productName.Count; j++)
-            {
-                if (LiveData.data.userData.Levels[0]._pName[Rand]._pName == LiveData.data.DataList[0]._productName[j])
-                {
-                    ProductsTexture.Add(LiveData.data.DataList[0]._productimage[j]);
-                    break;
-                }
-            }
+            ProductsNames.Add(LiveData.data.userData.Levels[0]._pName[Rand]._pName);
+            //_pNames.Add(LiveData.data.userData.Levels[0]._pName[Rand]._pName);
             //Products.Add(Level_1[Rand]);
+            ProductsTexture.Add(LiveData.data.DataList[0]._productimage[vs[i]]);
         }
 
         //Add 2 products from Level_2
         List<int> _vs = new List<int>();
+        //Rand = Random.Range(0, LiveData.data.userData.Levels[1]._pName.Count);
         for (int i = 0; i < 2; i++)
         {
             //Rand = Random.Range(0, Level_2.Count);
@@ -110,23 +105,31 @@ public class GameManager : MonoBehaviour
                 //Rand = Random.Range(0, Level_2.Count);
             }
             _vs.Add(Rand);
-            Products.Add(Level_2[Rand]);
+            ProductsNames.Add(LiveData.data.userData.Levels[1]._pName[Rand]._pName);
+            //Products.Add(Level_2[Rand]);
+            ProductsTexture.Add(LiveData.data.DataList[1]._productimage[_vs[i]]);
         }
 
         //Add 1 products from Level_3
         //Rand = Random.Range(0, Level_3.Count);
         Rand = Random.Range(0, LiveData.data.userData.Levels[2]._pName.Count);
-        Products.Add(Level_3[Rand]);
+        ProductsNames.Add(LiveData.data.userData.Levels[1]._pName[Rand]._pName);
+        ProductsTexture.Add(LiveData.data.DataList[1]._productimage[_vs[Rand]]);
+        //Products.Add(Level_3[Rand]);
 
         //Add 1 products from Level_4
         //Rand = Random.Range(0, Level_4.Count);
         Rand = Random.Range(0, LiveData.data.userData.Levels[3]._pName.Count);
-        Products.Add(Level_4[Rand]);
+        ProductsNames.Add(LiveData.data.userData.Levels[1]._pName[Rand]._pName);
+        ProductsTexture.Add(LiveData.data.DataList[1]._productimage[_vs[Rand]]);
+        //Products.Add(Level_4[Rand]);
 
         //Add 1 products to load next Board
-        Products.Add(Next);
+        //Products.Add(Next);
+        ProductsTexture.Add(NextTexture);
         //Add 1 products to load next Board
-        Products.Add(Next);
+        //Products.Add(Next);
+        ProductsTexture.Add(NextTexture);
 
         //Baskets fill with random items from products list 
         Board_1_Assign();
@@ -148,8 +151,10 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < Baskets.Length; i++)
         {
-            Baskets[i].transform.GetChild(0).GetComponent<Image>().sprite = Products[list[i]];
-            Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Products[list[i]].name;
+            //Baskets[i].transform.GetChild(0).GetComponent<Image>().sprite = Products[list[i]];
+            //Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Products[list[i]].name;
+            Baskets[i].transform.GetChild(0).GetComponent<RawImage>().texture = ProductsTexture[list[i]];
+            Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = ProductsNames[list[i]];
 
             if (list[i] == 0 || list[i] == 1)
             {

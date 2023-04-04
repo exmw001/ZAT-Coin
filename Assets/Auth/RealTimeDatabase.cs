@@ -51,12 +51,12 @@ public class RealTimeDatabase : MonoBehaviour
     #region read Coins
     public void ReadData()
     {
-        StartCoroutine(GetValue((string name) =>
-        {
-            LiveData.data.userData.Coins = Int16.Parse(name);
+        StartCoroutine(GetValue());//(string Coin) =>
+        /*{
+            LiveData.data.userData.Coins = Int16.Parse(Coin);
             Debug.Log(LiveData.data.userData.Coins);
-            ReadData();
-        }));
+            //ReadData();
+        }));*/
     }
 
     public void subtractCoin()
@@ -65,15 +65,16 @@ public class RealTimeDatabase : MonoBehaviour
         reference.Child(LiveData.data.userID).SetValueAsync(LiveData.data.userData.Coins);
         ReadData();
     }
-    IEnumerator GetValue(Action<string> oncallback)
+    IEnumerator GetValue(/*Action<string> oncallback*/)
     {
-        var value = reference.Child(LiveData.data.userID).Child("Coins").GetValueAsync();
+        var value = reference.Child("Users").Child(LiveData.data.userID).Child("Coins").GetValueAsync();
         yield return new WaitUntil(predicate: () => value.IsCompleted);
 
         if (value != null)
         {
             DataSnapshot snapshot = value.Result;
-            oncallback.Invoke(snapshot.Value.ToString());
+            LiveData.data.userData.Coins = Int16.Parse(snapshot.Value.ToString());
+            //oncallback.Invoke(snapshot.Value.ToString());
         }
     }
     #endregion
@@ -147,7 +148,6 @@ public class RealTimeDatabase : MonoBehaviour
     }
 
     #region Creating User Basic Data
-
     public void CreateUser(string id, string UID)
     {
         loading.SetActive(true);
@@ -158,7 +158,7 @@ public class RealTimeDatabase : MonoBehaviour
         LiveData.data.userData.Earnings = 0;
         LiveData.data.userData.Token = id;
         string json = JsonUtility.ToJson(LiveData.data.userData);
-        reference.Child("Users").Child(id).SetRawJsonValueAsync(json);
+        reference.Child("Users").Child(_userID).SetRawJsonValueAsync(json);
         if (showProductEvent == null)
             showProductEvent = new UnityEvent();
         showProductEvent.AddListener(ShowProducts);
@@ -434,7 +434,6 @@ public class RealTimeDatabase : MonoBehaviour
                     break;
                 }
             }
-
         }
         //reference.Child("Users").Child(_userID).Child(LevelName).SetRawJsonValueAsync(json);
     }

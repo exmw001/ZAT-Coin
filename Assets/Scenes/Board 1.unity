@@ -559,6 +559,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 75b3b4b9831e5b24fb7c6a83be38353a, type: 3}
   - {fileID: 21300000, guid: 835f8680b086bb448987bc232cf62e00, type: 3}
   Products: []
+  ProductsTexture: []
   Next: {fileID: 21300000, guid: 4b1b2cb369e617d4fb1342ed9a6b7492, type: 3}
   list: 
   _sprites: []
@@ -1023,7 +1024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &638801928
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1146,7 +1147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &952198954
 RectTransform:
   m_ObjectHideFlags: 0

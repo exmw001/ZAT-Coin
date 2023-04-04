@@ -3,7 +3,6 @@ using Firebase.Storage;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;

@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using Firebase.Database;
+
 public class LiveData : MonoBehaviour
 {
     public static LiveData data;
     public string userID;
     public List<Data> DataList;
     public UserData userData = new UserData();
+
+    DatabaseReference reference;
     //public RawImage _Image;
     private void Awake()
     {
@@ -24,6 +28,10 @@ public class LiveData : MonoBehaviour
         }
         #endregion
     }
+    private void Start()
+    {
+        
+    }
     /*private void Update()
     {
         if (DataList[0]._productimage.Count > 12 && !cals)
@@ -37,6 +45,34 @@ public class LiveData : MonoBehaviour
             
         }
     }*/
+    public void subtractCoin()
+    {
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
+        userData.Coins--;
+        reference.Child("Users").Child(userID).Child("Coins").SetValueAsync(userData.Coins);
+        ReadData();
+    }
+    void ReadData()
+    {
+        StartCoroutine(GetValue());//(string Coin) =>
+        /*{
+            LiveData.data.userData.Coins = Int16.Parse(Coin);
+            Debug.Log(LiveData.data.userData.Coins);
+            //ReadData();
+        }));*/
+    }
+    IEnumerator GetValue(/*Action<string> oncallback*/)
+    {
+        var value = reference.Child("Users").Child(LiveData.data.userID).Child("Coins").GetValueAsync();
+        yield return new WaitUntil(predicate: () => value.IsCompleted);
+
+        if (value != null)
+        {
+            DataSnapshot snapshot = value.Result;
+            LiveData.data.userData.Coins = Int16.Parse(snapshot.Value.ToString());
+            //oncallback.Invoke(snapshot.Value.ToString());
+        }
+    }
 }
 
 [Serializable]

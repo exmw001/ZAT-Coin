@@ -79,11 +79,12 @@ public class Ball : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Panel.SetActive(true);
-        RealTimeDatabase.instance.subtractCoin();
+        //RealTimeDatabase.instance.subtractCoin();
+        LiveData.data.subtractCoin();
         if (LiveData.data.userData.Coins > 0)
         {
             yield return new WaitForSeconds(2f);
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
         else
         {
