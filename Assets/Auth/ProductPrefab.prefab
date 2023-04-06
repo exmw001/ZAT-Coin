@@ -177,6 +177,9 @@ MonoBehaviour:
   image: {fileID: 1264142333706623355}
   button: {fileID: 1264142332821752751}
   Quantity: {fileID: 1264142333668064184}
+  levels:
+    LevelName: 
+    _pName: []
 --- !u!1 &1264142333215216505
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,13 +538,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1264142333668064187}
   m_TextComponent: {fileID: 1264142333558301115}
   m_Placeholder: {fileID: 1264142333637523691}
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 1
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:

@@ -419,11 +419,11 @@ public class RealTimeDatabase : MonoBehaviour
         reference.Child("Users").Child(_userID).Child("Levels").Child(LevelName).Child(ProductName).SetRawJsonValueAsync(json);
         //Add user Data Local
         _levels.LevelName = LevelName;
-        if (!_levels._pName.Contains(productData))
+        if (!LiveData.data.userData.Levels[0]._pName.Contains(productData))
         {
             _levels._pName.Add(productData);
         }
-        else if (_levels._pName.Contains(productData))
+        else if (LiveData.data.userData.Levels[0]._pName.Contains(productData))
         {
             for (int i = 0; i < _levels._pName.Count; i++)
             {
