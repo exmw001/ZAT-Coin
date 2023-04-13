@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
     public Sprite Next;
     public Texture2D NextTexture;
     int Rand;
-    public List<int> list = new List<int>();
+    public List<int> listRandomBaskets = new List<int>();
+    public List<int> index_random_Basket;
     public static GameManager instance;
     int scene_index;
 
@@ -126,59 +127,111 @@ public class GameManager : MonoBehaviour
         userProduct4.productName = "Next";
         userProduct4.ProductLevel = -1;
         _userProductLocal.Add(userProduct4);
-        _userProductLocal.Add(userProduct4);
+        //Add 1 products to load next Board
+        UserProductLocal userProduct5 = new UserProductLocal();
+        userProduct5.productName = "Next";
+        userProduct5.ProductLevel = -1;
+        _userProductLocal.Add(userProduct5);
         /*ProductsTexture.Add(NextTexture);
         ProductsTexture.Add(NextTexture);*/
 
         //Baskets fill with random items from products list 
         //Board_1_Assign();
+        Board_1_Assign_new();
+    }
+    void Board_1_Assign_new()
+    {
+        #region create random number for baskets to show products
+        for (int j = 0; j < Baskets.Length; j++)
+        {
+            Rand = Random.Range(0, _userProductLocal.Count);
+
+            while (index_random_Basket.Contains(Rand))
+            {
+                Debug.Log("Rand Basket" + Rand);
+                Rand = Random.Range(0, _userProductLocal.Count);
+            }
+
+            index_random_Basket.Add(Rand);
+        }
+        #endregion
+        for (int i = 0; i < Baskets.Length; i++)
+        {
+            Debug.Log(i + "products");
+            int Basket_idx = index_random_Basket[i];
+            int _level = _userProductLocal[i].ProductLevel;
+            if (_level >= 0)//LiveData.data.DataList[_level]._productName.Contains(_userProductLocal[i].productName))
+            {
+                Debug.Log(_level + "level");
+                for (int j = 0; j < LiveData.data.DataList[_level]._productName.Count; j++)
+                {
+                    if (LiveData.data.DataList[_level]._productName[j] == _userProductLocal[i].productName)
+                    {
+                        Debug.Log("tag Level");
+                        Baskets[Basket_idx].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = LiveData.data.DataList[_level]._productName[j].ToString();
+                        //Baskets[i].transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[_level]._productimage[j];
+                        int temp = _level + 1;
+                        string _tag = "Level" + temp;
+                        Baskets[Basket_idx].transform.GetChild(0).tag = _tag;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("tag egg");
+                Baskets[Basket_idx].transform.GetChild(0).tag = "Egg";
+                Baskets[Basket_idx].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _userProductLocal[i].productName;
+                //Baskets[Basket_idx].transform.GetChild(0).GetComponent<RawImage>().texture = NextTexture;
+            }
+        }
     }
     void Board_1_Assign()
     {
-        list = new List<int>(new int[Baskets.Length]);
+        listRandomBaskets = new List<int>(new int[Baskets.Length]);
         for (int j = 1; j < Baskets.Length; j++)
         {
             Rand = Random.Range(0, _userProductLocal.Count);
 
-            while (list.Contains(Rand))
+            while (listRandomBaskets.Contains(Rand))
             {
                 Rand = Random.Range(0, _userProductLocal.Count);
             }
 
-            list[j] = Rand;
+            listRandomBaskets[j] = Rand;
         }
 
         for (int i = 0; i < Baskets.Length; i++)
         {
             //Baskets[i].transform.GetChild(0).GetComponent<Image>().sprite = Products[list[i]];
             //Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Products[list[i]].name;
-            Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _userProductLocal[list[i]].productName;
-            for (int j = 0; j < LiveData.data.DataList[_userProductLocal[list[i]].ProductLevel]._productName.Count; j++)
+            Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _userProductLocal[listRandomBaskets[i]].productName;
+            for (int j = 0; j < LiveData.data.DataList[_userProductLocal[listRandomBaskets[i]].ProductLevel]._productName.Count; j++)
             {
-                if (LiveData.data.DataList[_userProductLocal[list[i]].ProductLevel]._productName.Contains(_userProductLocal[list[i]].productName))
+                if (LiveData.data.DataList[_userProductLocal[listRandomBaskets[i]].ProductLevel]._productName.Contains(_userProductLocal[listRandomBaskets[i]].productName))
                 {
-                    Baskets[i].transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[_userProductLocal[list[i]].ProductLevel]._productimage[j];
+                    Baskets[i].transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[_userProductLocal[listRandomBaskets[i]].ProductLevel]._productimage[j];
                     break;
                 }
             }
 
-            if (list[i] == 0 || list[i] == 1)
+            if (listRandomBaskets[i] == 0 || listRandomBaskets[i] == 1)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 1";
             }
-            else if (list[i] == 2 || list[i] == 3)
+            else if (listRandomBaskets[i] == 2 || listRandomBaskets[i] == 3)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 2";
             }
-            else if (list[i] == 4)
+            else if (listRandomBaskets[i] == 4)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 3";
             }
-            else if (list[i] == 5)
+            else if (listRandomBaskets[i] == 5)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 4";
             }
-            else if (list[i] == 6 || list[i] == 7)
+            else if (listRandomBaskets[i] == 6 || listRandomBaskets[i] == 7)
             {
                 Baskets[i].transform.GetChild(0).tag = "Egg";
             }
@@ -220,45 +273,45 @@ public class GameManager : MonoBehaviour
     }
     void Board_2_Assign()
     {
-        list = new List<int>(new int[Baskets.Length]);
+        listRandomBaskets = new List<int>(new int[Baskets.Length]);
         for (int j = 1; j < Baskets.Length; j++)
         {
             Rand = Random.Range(0, Products.Count);
 
-            while (list.Contains(Rand))
+            while (listRandomBaskets.Contains(Rand))
             {
                 Rand = Random.Range(0, Products.Count);
             }
 
-            list[j] = Rand;
+            listRandomBaskets[j] = Rand;
         }
 
         for (int i = 0; i < Baskets.Length; i++)
         {
-            Baskets[i].transform.GetChild(0).GetComponent<Image>().sprite = Products[list[i]];
-            Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Products[list[i]].name;
+            Baskets[i].transform.GetChild(0).GetComponent<Image>().sprite = Products[listRandomBaskets[i]];
+            Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Products[listRandomBaskets[i]].name;
 
-            if (list[i] == 0 || list[i] == 1)
+            if (listRandomBaskets[i] == 0 || listRandomBaskets[i] == 1)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 1";
             }
-            else if (list[i] == 2)
+            else if (listRandomBaskets[i] == 2)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 2";
             }
-            else if (list[i] == 3)
+            else if (listRandomBaskets[i] == 3)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 3";
             }
-            else if (list[i] == 4)
+            else if (listRandomBaskets[i] == 4)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 4";
             }
-            else if (list[i] == 5)
+            else if (listRandomBaskets[i] == 5)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 4";
             }
-            else if (list[i] == 6 || list[i] == 7)
+            else if (listRandomBaskets[i] == 6 || listRandomBaskets[i] == 7)
             {
                 Baskets[i].transform.GetChild(0).tag = "Egg";
             }
@@ -296,53 +349,53 @@ public class GameManager : MonoBehaviour
     }
     void Board_3_Assign()
     {
-        list = new List<int>(new int[Baskets.Length]);
+        listRandomBaskets = new List<int>(new int[Baskets.Length]);
         for (int j = 1; j < Baskets.Length; j++)
         {
             Rand = Random.Range(0, Products.Count);
 
-            while (list.Contains(Rand))
+            while (listRandomBaskets.Contains(Rand))
             {
                 Rand = Random.Range(0, Products.Count);
             }
 
-            list[j] = Rand;
+            listRandomBaskets[j] = Rand;
         }
 
         for (int i = 0; i < Baskets.Length; i++)
         {
-            Baskets[i].transform.GetChild(0).GetComponent<Image>().sprite = Products[list[i]];
-            Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Products[list[i]].name;
+            Baskets[i].transform.GetChild(0).GetComponent<Image>().sprite = Products[listRandomBaskets[i]];
+            Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Products[listRandomBaskets[i]].name;
 
-            if (list[i] == 0)
+            if (listRandomBaskets[i] == 0)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 1";
             }
-            else if (list[i] == 1)
+            else if (listRandomBaskets[i] == 1)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 2";
             }
-            else if (list[i] == 2)
+            else if (listRandomBaskets[i] == 2)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 3";
             }
-            else if (list[i] == 3)
+            else if (listRandomBaskets[i] == 3)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 4";
             }
-            else if (list[i] == 4)
+            else if (listRandomBaskets[i] == 4)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 5";
             }
-            else if (list[i] == 5)
+            else if (listRandomBaskets[i] == 5)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 6";
             }
-            else if (list[i] == 6)
+            else if (listRandomBaskets[i] == 6)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 7";
             }
-            else if (list[i] == 7)
+            else if (listRandomBaskets[i] == 7)
             {
                 Baskets[i].transform.GetChild(0).tag = "Egg";
             }
@@ -381,53 +434,53 @@ public class GameManager : MonoBehaviour
     }
     void Board_4_Assign()
     {
-        list = new List<int>(new int[Baskets.Length]);
+        listRandomBaskets = new List<int>(new int[Baskets.Length]);
         for (int j = 1; j < Baskets.Length; j++)
         {
             Rand = Random.Range(0, Products.Count);
 
-            while (list.Contains(Rand))
+            while (listRandomBaskets.Contains(Rand))
             {
                 Rand = Random.Range(0, Products.Count);
             }
 
-            list[j] = Rand;
+            listRandomBaskets[j] = Rand;
         }
 
         for (int i = 0; i < Baskets.Length; i++)
         {
-            Baskets[i].transform.GetChild(0).GetComponent<Image>().sprite = Products[list[i]];
-            Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Products[list[i]].name;
+            Baskets[i].transform.GetChild(0).GetComponent<Image>().sprite = Products[listRandomBaskets[i]];
+            Baskets[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Products[listRandomBaskets[i]].name;
 
-            if (list[i] == 0)
+            if (listRandomBaskets[i] == 0)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 1";
             }
-            else if (list[i] == 1)
+            else if (listRandomBaskets[i] == 1)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 2";
             }
-            else if (list[i] == 2)
+            else if (listRandomBaskets[i] == 2)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 3";
             }
-            else if (list[i] == 3)
+            else if (listRandomBaskets[i] == 3)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 4";
             }
-            else if (list[i] == 4)
+            else if (listRandomBaskets[i] == 4)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 5";
             }
-            else if (list[i] == 5)
+            else if (listRandomBaskets[i] == 5)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 6";
             }
-            else if (list[i] == 6)
+            else if (listRandomBaskets[i] == 6)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 7";
             }
-            else if (list[i] == 7)
+            else if (listRandomBaskets[i] == 7)
             {
                 Baskets[i].transform.GetChild(0).tag = "Level 8";
             }

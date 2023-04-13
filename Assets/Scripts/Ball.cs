@@ -62,14 +62,14 @@ public class Ball : MonoBehaviour
                 NextPanel.SetActive(true);
                 StartCoroutine(LoadScene());
             }
-            else if ((collision.tag == "Level 1" || collision.tag == "Level 2" || collision.tag == "Level 3" || collision.tag == "Level 4" || collision.tag == "Level 5" || collision.tag == "Level 6" || collision.tag == "Level 7" || collision.tag == "Level 8") && trigger)
+            else if ((collision.tag == "Level1" || collision.tag == "Level2" || collision.tag == "Level3" || collision.tag == "Level4" || collision.tag == "Level5" || collision.tag == "Level6" || collision.tag == "Level7" || collision.tag == "Level8") && trigger)
             {
                 trigger = false;
                 TableSoundCheck();
                 StartCoroutine(Won());
-                prize.sprite = collision.GetComponent<Image>().sprite;
-                Panel.transform.GetChild(2).GetComponent<Text>().text = "Ganhou 1 " + prize.sprite.name;
-                WonProducts.instance.AddProduct(prize.sprite);
+                //_ali prize.sprite = collision.GetComponent<Image>().sprite;
+                //_ali Panel.transform.GetChild(2).GetComponent<Text>().text = "Ganhou 1 " + prize.sprite.name;
+                //_ali WonProducts.instance.AddProduct(prize.sprite);
                 soundName = collision.tag;
             }
         }
