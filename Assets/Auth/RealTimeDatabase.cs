@@ -16,6 +16,7 @@ public class RealTimeDatabase : MonoBehaviour
     [SerializeField] List<String> _levelName;
 
     public static RealTimeDatabase instance;
+    public int ProductAddCounter;
     DatabaseReference reference;
 
     [Header(".....Data from Firebase.....")]
@@ -209,6 +210,10 @@ public class RealTimeDatabase : MonoBehaviour
     }
     void LoadLevelWithBtnClick()
     {
+        //Add At least 2 Products
+        if (ProductAddCounter < 2) return;
+        ProductAddCounter = 0;
+
         levelCounter++;
         if (levelCounter >= levels.Count)
         {

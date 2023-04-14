@@ -3475,6 +3475,7 @@ MonoBehaviour:
   - Level_6
   - Level_7
   - Level_8
+  ProductAddCounter: 0
   levels:
   - LevelName: Level_1
     _productName: []

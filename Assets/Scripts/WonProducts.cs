@@ -7,7 +7,7 @@ public class WonProducts : MonoBehaviour
 {
     public static WonProducts instance;
 
-    public List<Sprite> wonProducts;
+    public List<string> wonProductsName;
 
     private void Awake()
     {
@@ -16,8 +16,8 @@ public class WonProducts : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void AddProduct(Sprite sprite)
+    public void AddProduct(string sprite)
     {
-        wonProducts.Add(sprite);
+        wonProductsName.Add(sprite);
     }
 }

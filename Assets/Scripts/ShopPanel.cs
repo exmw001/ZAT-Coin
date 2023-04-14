@@ -95,7 +95,7 @@ public class ShopPanel : MonoBehaviour
     void ProductsWon()
     {
         ClearView();
-        products = WonProducts.instance.wonProducts;
+        //ali products = WonProducts.instance.wonProducts;
         length = products.Count;
 
         switch (board)
@@ -172,7 +172,7 @@ public class ShopPanel : MonoBehaviour
     public void ClearList()
     {
         ClearView();
-        WonProducts.instance.wonProducts.Clear();
+        WonProducts.instance.wonProductsName.Clear();
     }
 
     #endregion

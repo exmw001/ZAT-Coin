@@ -9,7 +9,7 @@ public class Ball : MonoBehaviour
 {
     public Button ShopButton, WonButton;
     public GameObject Panel, NextPanel, PlayButton;
-    public Image prize;
+    public RawImage prize;
     public int scene_index;
 
     private void Awake()
@@ -67,9 +67,10 @@ public class Ball : MonoBehaviour
                 trigger = false;
                 TableSoundCheck();
                 StartCoroutine(Won());
-                //_ali prize.sprite = collision.GetComponent<Image>().sprite;
-                //_ali Panel.transform.GetChild(2).GetComponent<Text>().text = "Ganhou 1 " + prize.sprite.name;
-                //_ali WonProducts.instance.AddProduct(prize.sprite);
+                Panel.transform.GetChild(2).GetComponent<Text>().text = "Ganhou 1 " + prize.transform.parent.GetChild(1).gameObject.GetComponent<TextMesh>().text;
+                prize.texture = collision.GetComponent<Texture>();
+                Debug.Log(prize.transform.parent.GetChild(1).gameObject.GetComponent<TextMesh>().text);
+                WonProducts.instance.AddProduct(prize.transform.parent.GetChild(1).gameObject.GetComponent<TextMesh>().text);
                 soundName = collision.tag;
             }
         }

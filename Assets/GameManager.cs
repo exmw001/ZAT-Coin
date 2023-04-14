@@ -165,11 +165,11 @@ public class GameManager : MonoBehaviour
                 Debug.Log(_level + "level");
                 for (int j = 0; j < LiveData.data.DataList[_level]._Tex2D.Count; j++)
                 {
-                    if (LiveData.data.DataList[_level]._Tex2D[j]._productName == _userProductLocal[i].productName)
+                    if (LiveData.data.DataList[_level]._Tex2D[j]._productName == _userProductLocal[i].productName + ".png")
                     {
                         Debug.Log("tag Level");
-                        Baskets[Basket_idx].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = LiveData.data.DataList[_level]._Tex2D[j]._productName.ToString();
-                        //Baskets[Basket_idx].transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[_level]._Tex2D[j]._productimage;
+                        Baskets[Basket_idx].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _userProductLocal[i].productName.ToString();
+                        Baskets[Basket_idx].transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[_level]._Tex2D[j]._productimage;
                         int temp = _level + 1;
                         string _tag = "Level" + temp;
                         Baskets[Basket_idx].transform.GetChild(0).tag = _tag;

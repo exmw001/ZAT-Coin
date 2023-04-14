@@ -27,9 +27,12 @@ public class Product : MonoBehaviour
 
     void AddProduct()
     {
-        button.interactable = false;
-        if (image.texture != null)
+        if (image.texture != null && Price.text != null && Quantity.text != null)
+        {
+            RealTimeDatabase.instance.ProductAddCounter++;
+            button.interactable = false;
             RealTimeDatabase.instance.AddProduct(LevelName, _pName, int.Parse(Quantity.text), float.Parse(Price.text), levels);
+        }
     }
 
     /*public void GetImage(string URL)
