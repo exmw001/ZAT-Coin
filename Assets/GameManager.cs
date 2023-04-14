@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public List<UserProductLocal> _userProductLocal;
 
     public Sprite Next;
-    public Texture2D NextTexture;
+    public Texture NextTexture;
     int Rand;
     public List<int> listRandomBaskets = new List<int>();
     public List<int> index_random_Basket;
@@ -163,13 +163,13 @@ public class GameManager : MonoBehaviour
             if (_level >= 0)//LiveData.data.DataList[_level]._productName.Contains(_userProductLocal[i].productName))
             {
                 Debug.Log(_level + "level");
-                for (int j = 0; j < LiveData.data.DataList[_level]._productName.Count; j++)
+                for (int j = 0; j < LiveData.data.DataList[_level]._Tex2D.Count; j++)
                 {
-                    if (LiveData.data.DataList[_level]._productName[j] == _userProductLocal[i].productName)
+                    if (LiveData.data.DataList[_level]._Tex2D[j]._productName == _userProductLocal[i].productName)
                     {
                         Debug.Log("tag Level");
-                        Baskets[Basket_idx].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = LiveData.data.DataList[_level]._productName[j].ToString();
-                        //Baskets[i].transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[_level]._productimage[j];
+                        Baskets[Basket_idx].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = LiveData.data.DataList[_level]._Tex2D[j]._productName.ToString();
+                        //Baskets[Basket_idx].transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[_level]._Tex2D[j]._productimage;
                         int temp = _level + 1;
                         string _tag = "Level" + temp;
                         Baskets[Basket_idx].transform.GetChild(0).tag = _tag;
@@ -182,11 +182,11 @@ public class GameManager : MonoBehaviour
                 Debug.Log("tag egg");
                 Baskets[Basket_idx].transform.GetChild(0).tag = "Egg";
                 Baskets[Basket_idx].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _userProductLocal[i].productName;
-                //Baskets[Basket_idx].transform.GetChild(0).GetComponent<RawImage>().texture = NextTexture;
+                Baskets[Basket_idx].transform.GetChild(0).GetComponent<RawImage>().texture = NextTexture;
             }
         }
     }
-    void Board_1_Assign()
+    /*void Board_1_Assign()
     {
         listRandomBaskets = new List<int>(new int[Baskets.Length]);
         for (int j = 1; j < Baskets.Length; j++)
@@ -236,7 +236,7 @@ public class GameManager : MonoBehaviour
                 Baskets[i].transform.GetChild(0).tag = "Egg";
             }
         }
-    }
+    }*/
     #endregion
 
     #region Board 2

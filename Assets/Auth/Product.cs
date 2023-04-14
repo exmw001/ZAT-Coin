@@ -14,6 +14,7 @@ public class Product : MonoBehaviour
     public RawImage image;
     [SerializeField] Button button;
     [SerializeField] InputField Quantity;
+    [SerializeField] InputField Price;
     public Levels levels;
     private void Awake()
     {
@@ -26,8 +27,9 @@ public class Product : MonoBehaviour
 
     void AddProduct()
     {
+        button.interactable = false;
         if (image.texture != null)
-            RealTimeDatabase.instance.AddProduct(LevelName, _pName, int.Parse(Quantity.text),levels);
+            RealTimeDatabase.instance.AddProduct(LevelName, _pName, int.Parse(Quantity.text), float.Parse(Price.text), levels);
     }
 
     /*public void GetImage(string URL)

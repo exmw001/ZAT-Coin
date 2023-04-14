@@ -3787,28 +3787,28 @@ MonoBehaviour:
   DataList:
   - LevelName: Level_1
     _productName: []
-    _productimage: []
+    _Tex2D: []
   - LevelName: Level_2
     _productName: []
-    _productimage: []
+    _Tex2D: []
   - LevelName: Level_3
     _productName: []
-    _productimage: []
+    _Tex2D: []
   - LevelName: Level_4
     _productName: []
-    _productimage: []
+    _Tex2D: []
   - LevelName: Level_5
     _productName: []
-    _productimage: []
+    _Tex2D: []
   - LevelName: Level_6
     _productName: []
-    _productimage: []
+    _Tex2D: []
   - LevelName: Level_7
     _productName: []
-    _productimage: []
+    _Tex2D: []
   - LevelName: Level_8
     _productName: []
-    _productimage: []
+    _Tex2D: []
   userData:
     Coins: 0
     Earnings: 0
@@ -4707,6 +4707,7 @@ MonoBehaviour:
   image: {fileID: 2877654384701645532}
   button: {fileID: 7006464114939503676}
   Quantity: {fileID: 2877654385504848056}
+  Price: {fileID: 0}
   levels:
     LevelName: 
     _pName: []

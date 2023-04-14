@@ -34,7 +34,7 @@ public class LoadImage : MonoBehaviour
         {
             if (!task.IsFaulted && !task.IsCanceled)
             {
-                StartCoroutine(_LoadSprite(Convert.ToString(task.Result), data, @event));
+                StartCoroutine(_LoadSprite(Convert.ToString(task.Result),ChildName, data, @event));
             }
             else
             {
@@ -42,22 +42,26 @@ public class LoadImage : MonoBehaviour
             }
         });
     }
-    IEnumerator _LoadSprite(string MediaUrl, Data data ,UnityEvent @event)
+    IEnumerator _LoadSprite(string MediaUrl,string productName, Data data ,UnityEvent @event)
     {
         Debug.Log(MediaUrl);
+        Tex2D tex2D = new Tex2D(); ;
+        tex2D._productName = productName;
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl); //Create a request
         yield return request.SendWebRequest(); //Wait for the request to complete
 
         if (request.isNetworkError || request.isHttpError)
         {
-            data._productimage.Add(null);
+            tex2D._productimage = null;
+            data._Tex2D.Add(tex2D);
             Debug.Log(request.error);
         }
         else
         {
             Texture2D myTexture2D = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            data._productimage.Add(myTexture2D);
-            if (data._productName.Count == data._productimage.Count)
+            tex2D._productimage = myTexture2D;
+            data._Tex2D.Add(tex2D);
+            if (data._productName.Count == data._Tex2D.Count)
             {
                 if (@event != null)
                 {

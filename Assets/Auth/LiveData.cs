@@ -69,7 +69,7 @@ public class LiveData : MonoBehaviour
         if (value != null)
         {
             DataSnapshot snapshot = value.Result;
-            LiveData.data.userData.Coins = Int16.Parse(snapshot.Value.ToString());
+            data.userData.Coins = Int16.Parse(snapshot.Value.ToString());
             //oncallback.Invoke(snapshot.Value.ToString());
         }
     }
@@ -94,5 +94,11 @@ public class Data
 {
     public String LevelName;
     public List<string> _productName;
-    public List<Texture2D> _productimage;
+    public List<Tex2D> _Tex2D;
+}
+[Serializable]
+public class Tex2D
+{
+    public string _productName;
+    public Texture2D _productimage;
 }

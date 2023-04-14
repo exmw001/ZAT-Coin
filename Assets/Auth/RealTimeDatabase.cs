@@ -243,8 +243,8 @@ public class RealTimeDatabase : MonoBehaviour
             _product.GetComponent<Product>()._pName = _p._productName[i];
             _product.GetComponent<Product>().LevelName = _p.LevelName;
             _product.GetComponent<Product>().levels = _levels;
-            if (_p._productimage[i] != null)
-                _product.GetComponent<Product>().image.texture = _p._productimage[i];
+            if (_p._Tex2D[i]._productimage != null)
+                _product.GetComponent<Product>().image.texture = _p._Tex2D[i]._productimage;
 
             //LoadImage.instance.LoopFunction_GetImage(_p.LevelName, _p._productName[i], _product.GetComponent<Product>().image);
         }
@@ -410,11 +410,12 @@ public class RealTimeDatabase : MonoBehaviour
         }
     }
 
-    public void AddProduct(string LevelName, string ProductName, int Quantity, Levels _levels)
+    public void AddProduct(string LevelName, string ProductName, int Quantity,float Price, Levels _levels)
     {
         ProductData productData = new ProductData();
         productData._pName = ProductName;
         productData.Quantity = Quantity;
+        productData.Price = Price;
         string json = JsonUtility.ToJson(productData);
         reference.Child("Users").Child(_userID).Child("Levels").Child(LevelName).Child(ProductName).SetRawJsonValueAsync(json);
         //Add user Data Local
@@ -471,6 +472,7 @@ public class ProductData
 {
     public string _pName;
     public int Quantity;
+    public float Price;
 }
 
 public class _ProductData
