@@ -90,6 +90,13 @@ public class Levels
     public List<ProductData> _pName = new List<ProductData>();
 }
 [Serializable]
+public class ProductData
+{
+    public string _pName;
+    public int Quantity;
+    public float Price;
+}
+[Serializable]
 public class Data
 {
     public String LevelName;
@@ -101,4 +108,10 @@ public class Tex2D
 {
     public string _productName;
     public Texture2D _productimage;
+}
+[Serializable]
+public class WonProductData
+{
+    public int _Level;
+    public String ProductName;
 }

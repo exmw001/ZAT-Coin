@@ -91,11 +91,11 @@ public class ShopPanel : MonoBehaviour
     #region Won
 
     int length;
-    List<Sprite> products;
+    List<WonProductData> products;
     void ProductsWon()
     {
         ClearView();
-        //ali products = WonProducts.instance.wonProducts;
+        products = WonProducts.instance.wonProductsName;
         length = products.Count;
 
         switch (board)
@@ -122,9 +122,20 @@ public class ShopPanel : MonoBehaviour
         for (int i = 0; i < length; i++)
         {
             var v = Instantiate(prefab, Wonparent);
-            v.GetComponent<Image>().sprite = BackgroundBG[0];
-            v.transform.GetChild(0).GetComponent<Image>().sprite = products[i];
-            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;
+            v.GetComponent<Image>().sprite = BackgroundBG[products[i]._Level];
+
+            for (int j = 0; j < LiveData.data.DataList[products[i]._Level]._Tex2D.Count; j++)
+            {
+                if (LiveData.data.DataList[products[i]._Level]._Tex2D[j]._productName == products[i].ProductName + ".png")
+                {
+                    Debug.Log("tag Level");
+                    v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].ProductName;
+                    v.transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[products[i]._Level]._Tex2D[j]._productimage;
+                    break;
+                }
+            }
+            /*v.transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[0]._Tex2D[j]._productimage;
+            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;*/
         }
     }
 
@@ -134,8 +145,8 @@ public class ShopPanel : MonoBehaviour
         {
             var v = Instantiate(prefab, Wonparent);
             v.GetComponent<Image>().sprite = BackgroundBG[1];
-            v.transform.GetChild(0).GetComponent<Image>().sprite = products[i];
-            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;
+            /*v.transform.GetChild(0).GetComponent<Image>().sprite = products[i];
+            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;*/
         }
     }
 
@@ -145,8 +156,8 @@ public class ShopPanel : MonoBehaviour
         {
             var v = Instantiate(prefab, Wonparent);
             v.GetComponent<Image>().sprite = BackgroundBG[2];
-            v.transform.GetChild(0).GetComponent<Image>().sprite = products[i];
-            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;
+            /*v.transform.GetChild(0).GetComponent<Image>().sprite = products[i];
+            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;*/
         }
     }
 
@@ -156,8 +167,8 @@ public class ShopPanel : MonoBehaviour
         {
             var v = Instantiate(prefab, Wonparent);
             v.GetComponent<Image>().sprite = BackgroundBG[3];
-            v.transform.GetChild(0).GetComponent<Image>().sprite = products[i];
-            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;
+            /*v.transform.GetChild(0).GetComponent<Image>().sprite = products[i];
+            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;*/
         }
     }
 

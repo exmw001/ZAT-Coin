@@ -7,7 +7,7 @@ public class WonProducts : MonoBehaviour
 {
     public static WonProducts instance;
 
-    public List<string> wonProductsName;
+    public List<WonProductData> wonProductsName;
 
     private void Awake()
     {
@@ -16,8 +16,11 @@ public class WonProducts : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void AddProduct(string sprite)
+    public void AddProduct(int _level,string sprite)
     {
-        wonProductsName.Add(sprite);
+        WonProductData _WonProducts = new WonProductData();
+        _WonProducts._Level = _level;
+        _WonProducts.ProductName = sprite;
+        wonProductsName.Add(_WonProducts);
     }
 }

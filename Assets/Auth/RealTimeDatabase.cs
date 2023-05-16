@@ -466,29 +466,9 @@ public class RealTimeDatabase : MonoBehaviour
     #endregion
 }
 
-[Serializable]
+[System.Serializable]
 public class LevelData
 {
     public String LevelName;
     public List<string> _productName;
 }
-[Serializable]
-public class ProductData
-{
-    public string _pName;
-    public int Quantity;
-    public float Price;
-}
-
-public class _ProductData
-{
-    public List<string> _pName;
-    public List<string> _dName;
-    public List<int> Quantity;
-}
-
-//[Serializable]
-//public class LevelsString
-//{
-//    public List<string> ProductsName;
-//}

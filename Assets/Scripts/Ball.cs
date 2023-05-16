@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 using DG.Tweening;
 
 public class Ball : MonoBehaviour
@@ -11,10 +12,11 @@ public class Ball : MonoBehaviour
     public GameObject Panel, NextPanel, PlayButton;
     public RawImage prize;
     public int scene_index;
+    
 
     private void Awake()
     {
-        ShopButton.interactable = WonButton.interactable = true; 
+        ShopButton.interactable = WonButton.interactable = true;
         Time.timeScale = 1f;
         GetComponent<Rigidbody2D>().gravityScale = 0f;
     }
@@ -40,7 +42,7 @@ public class Ball : MonoBehaviour
     public void gamePlay()
     {
         //if(RealTimeDatabase.coins > 0)
-        if(LiveData.data.userData.Coins > 0)
+        if (LiveData.data.userData.Coins > 0)
         {
             ShopButton.interactable = WonButton.interactable = false;
             move = false;
@@ -67,12 +69,14 @@ public class Ball : MonoBehaviour
                 trigger = false;
                 TableSoundCheck();
                 StartCoroutine(Won());
-                Panel.transform.GetChild(2).GetComponent<Text>().text = "Ganhou 1 " + prize.transform.parent.GetChild(1).gameObject.GetComponent<TextMesh>().text;
+                Panel.transform.GetChild(2).GetComponent<Text>().text = "Ganhou 1 " + collision.transform.parent.GetChild(1).gameObject.GetComponent<TextMeshPro>().text;
+                    //prize.transform.parent.GetChild(1).gameObject.GetComponent<TextMesh>().text;
                 prize.texture = collision.GetComponent<Texture>();
-                Debug.Log(prize.transform.parent.GetChild(1).gameObject.GetComponent<TextMesh>().text);
-                WonProducts.instance.AddProduct(prize.transform.parent.GetChild(1).gameObject.GetComponent<TextMesh>().text);
+                int lvl = int.Parse(prize.transform.parent.GetChild(1).name);
+                WonProducts.instance.AddProduct(lvl, prize.transform.parent.GetChild(1).gameObject.GetComponent<TextMesh>().text);
                 soundName = collision.tag;
             }
+
         }
     }
 

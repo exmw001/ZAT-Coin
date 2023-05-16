@@ -168,6 +168,8 @@ public class GameManager : MonoBehaviour
                     if (LiveData.data.DataList[_level]._Tex2D[j]._productName == _userProductLocal[i].productName + ".png")
                     {
                         Debug.Log("tag Level");
+
+                        Baskets[Basket_idx].name = _level.ToString();
                         Baskets[Basket_idx].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _userProductLocal[i].productName.ToString();
                         Baskets[Basket_idx].transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[_level]._Tex2D[j]._productimage;
                         int temp = _level + 1;
