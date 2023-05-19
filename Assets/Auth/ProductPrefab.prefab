@@ -259,7 +259,6 @@ MonoBehaviour:
   Quantity: {fileID: 1264142333668064184}
   Price: {fileID: 2557934898848204866}
   levels:
-    LevelName: 
     _pName: []
 --- !u!1 &1264142333215216505
 GameObject:
@@ -834,13 +833,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1607675600562377503}
   m_TextComponent: {fileID: 6296366834148139704}
   m_Placeholder: {fileID: 2420106564472666311}
-  m_ContentType: 2
+  m_ContentType: 3
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 4
+  m_KeyboardType: 2
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 1
+  m_CharacterValidation: 2
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:

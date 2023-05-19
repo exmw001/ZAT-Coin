@@ -63,7 +63,6 @@ public class Authentication : MonoBehaviour
         Debug.Log("Setting up Firebase Auth");
         //Set the authentication instance object
         auth = FirebaseAuth.DefaultInstance;
-        RealTimeDatabase.instance.LoadServerData();
     }
 
     //Function for the login button

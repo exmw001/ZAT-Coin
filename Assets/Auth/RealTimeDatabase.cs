@@ -113,83 +113,17 @@ public class RealTimeDatabase : MonoBehaviour
                     }
                     LiveData.data.userData.Levels.Add(_levels);
                 }
-
+                UnityEvent @event = new UnityEvent();
+                @event.AddListener(LoadNewScene);
+                LoadServerData(@event);
                 // Do something with snapshot...
             }
         });
-
-
     }
-    /* public void RetrieveUserData(string UID, string userName)
-     {
-         DatabaseReference userRef = FirebaseDatabase.DefaultInstance.GetReference("Users").Child(UID);
-
-         userRef.GetValueAsync().ContinueWith(task =>
-         {
-             if (task.IsFaulted)
-             {
-                 Debug.LogError("Error retrieving products: " + task.Exception);
-             }
-             else if (task.IsCompleted)
-             {
-                 DataSnapshot snapshot = task.Result;
-                 if (snapshot.HasChild(userName))
-                 {
-                     var value = snapshot.Child(userName).Child("Token").Value;
-                     if (value.ToString() == UID)
-                     {
-                         DatabaseReference LevelRef = FirebaseDatabase.DefaultInstance.GetReference("Users").Child(userName);
-                         LevelRef.GetValueAsync().ContinueWith(task =>
-                         {
-                             if (task.IsCompleted)
-                             {
-                                 DataSnapshot shot = task.Result;
-                                 for (int i = 0; i < _levelName.Count; i++)
-                                 {
-                                     LevelData data = new LevelData();
-                                     data.LevelName = _levelName[i];
-                                     List<string> names = new List<string>();
-                                     foreach (DataSnapshot productSnapshot in shot.Child(_levelName[i]).Children)
-                                     {
-                                         string productName = productSnapshot.Key;
-                                         names.Add(productName);
-                                     }
-                                     data._productName = names;
-                                     _UserLevels.Add(data);
-
-                                     #region Commented but Important 
-                                     //if (shot.HasChild(_levelName[i]))
-                                     //{
-                                     //    LevelData data = new LevelData();
-                                     //    data.LevelName = _levelName[i];
-                                     //    List<string> names = new List<string>();
-                                     //    foreach (DataSnapshot productSnapshot in shot.Child(_levelName[i]).Children)
-                                     //    {
-                                     //        string productName = productSnapshot.Key;
-                                     //        names.Add(productName);
-                                     //    }
-                                     //    data._productName = names;
-                                     //    _UserLevels.Add(data);
-                                     //    levelsString.ProductsName = names;
-                                     //    Levels.Add(levelsString);
-                                     //}
-                                     //else
-                                     //{
-                                     //    Levels.Add(levelsString);
-                                     //}
-                                     #endregion
-                                 }
-                             }
-                         });
-                     }
-
-                 }
-             }
-         });
-
-     }
-    */
-
+    void LoadNewScene()
+    {
+        SceneManager.LoadScene(1);
+    }
     #region Creating User Basic Data
     public void CreateUser(string id, string UID)
     {
@@ -205,18 +139,18 @@ public class RealTimeDatabase : MonoBehaviour
         if (showProductEvent == null)
             showProductEvent = new UnityEvent();
         showProductEvent.AddListener(ShowProducts);
-        LoadServerData();
+        LoadServerData(showProductEvent);
         //_ali ReadALLData();
     }
     #endregion
 
     #region load Levels data on start... after login 
-    public void LoadServerData()
+    public void LoadServerData(UnityEvent @event)
     {
         int counter = 0;
         StartCoroutine(Load((string name) =>
         {
-            LoadProduct_Sprites(counter, showProductEvent);
+            LoadProduct_Sprites(counter, @event);
             counter += 1;
             //Invoke("ShowProducts", 5f);
         }));
@@ -434,6 +368,14 @@ public class RealTimeDatabase : MonoBehaviour
         }
     }
     #endregion
+
+    public void _UserData()
+    {
+        for (int i = 0; i < _UserLevels.Count; i++)
+        {
+            LoadUserProducts(i);
+        }
+    }
     void LoadUserProducts(int counter)
     {
         var _p = _UserLevels[counter];
@@ -446,14 +388,6 @@ public class RealTimeDatabase : MonoBehaviour
             _product.GetComponent<Product>().LevelName = _p.LevelName;
 
             LoadImage.instance.LoopFunction_GetImage(_p.LevelName, _p._productName[i], _product.GetComponent<Product>().image);
-        }
-    }
-
-    public void _UserData()
-    {
-        for (int i = 0; i < _UserLevels.Count; i++)
-        {
-            LoadUserProducts(i);
         }
     }
 
