@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using static UnityEngine.Application;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using Firebase.Extensions;
 
 public class RealTimeDatabase : MonoBehaviour
 {
@@ -81,72 +82,113 @@ public class RealTimeDatabase : MonoBehaviour
     #endregion
     public void RetrieveUserData(string UID, string userName)
     {
-        DatabaseReference userRef = FirebaseDatabase.DefaultInstance.GetReference("Users");
-
-        userRef.GetValueAsync().ContinueWith(task =>
+        FirebaseDatabase.DefaultInstance.RootReference.Child("Users").Child(UID).GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsFaulted)
             {
-                Debug.LogError("Error retrieving products: " + task.Exception);
+                // Handle the error...
             }
             else if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
-                if (snapshot.HasChild(userName))
+                string data = snapshot.GetRawJsonValue();
+                LiveData.data.userData = JsonUtility.FromJson<UserData>(data);
+
+                DataSnapshot newSnap = task.Result.Child("Levels");
+
+
+                foreach (var item in newSnap.Children)
                 {
-                    var value = snapshot.Child(userName).Child("Token").Value;
-                    if (value.ToString() == UID)
+                    string LevelsSting = item.GetRawJsonValue();
+                    Levels _levels = JsonUtility.FromJson<Levels>(LevelsSting);
+                    Debug.Log(LevelsSting);
+                    //Levels _levels = new Levels();
+                    _levels = JsonUtility.FromJson<Levels>(item.GetRawJsonValue());
+                    //_levels.LevelName = 
+                    foreach (var _item in item.Children)
                     {
-                        DatabaseReference LevelRef = FirebaseDatabase.DefaultInstance.GetReference("Users").Child(userName);
-                        LevelRef.GetValueAsync().ContinueWith(task =>
-                        {
-                            if (task.IsCompleted)
-                            {
-                                DataSnapshot shot = task.Result;
-                                for (int i = 0; i < _levelName.Count; i++)
-                                {
-                                    LevelData data = new LevelData();
-                                    data.LevelName = _levelName[i];
-                                    List<string> names = new List<string>();
-                                    foreach (DataSnapshot productSnapshot in shot.Child(_levelName[i]).Children)
-                                    {
-                                        string productName = productSnapshot.Key;
-                                        names.Add(productName);
-                                    }
-                                    data._productName = names;
-                                    _UserLevels.Add(data);
-
-                                    #region Commented but Important 
-                                    //if (shot.HasChild(_levelName[i]))
-                                    //{
-                                    //    LevelData data = new LevelData();
-                                    //    data.LevelName = _levelName[i];
-                                    //    List<string> names = new List<string>();
-                                    //    foreach (DataSnapshot productSnapshot in shot.Child(_levelName[i]).Children)
-                                    //    {
-                                    //        string productName = productSnapshot.Key;
-                                    //        names.Add(productName);
-                                    //    }
-                                    //    data._productName = names;
-                                    //    _UserLevels.Add(data);
-                                    //    levelsString.ProductsName = names;
-                                    //    Levels.Add(levelsString);
-                                    //}
-                                    //else
-                                    //{
-                                    //    Levels.Add(levelsString);
-                                    //}
-                                    #endregion
-                                }
-                            }
-                        });
+                        ProductData productData = new ProductData();
+                        productData = JsonUtility.FromJson<ProductData>(_item.GetRawJsonValue());
+                        _levels._pName.Add(productData);
                     }
-
+                    LiveData.data.userData.Levels.Add(_levels);
                 }
+
+                // Do something with snapshot...
             }
         });
 
+
     }
+    /* public void RetrieveUserData(string UID, string userName)
+     {
+         DatabaseReference userRef = FirebaseDatabase.DefaultInstance.GetReference("Users").Child(UID);
+
+         userRef.GetValueAsync().ContinueWith(task =>
+         {
+             if (task.IsFaulted)
+             {
+                 Debug.LogError("Error retrieving products: " + task.Exception);
+             }
+             else if (task.IsCompleted)
+             {
+                 DataSnapshot snapshot = task.Result;
+                 if (snapshot.HasChild(userName))
+                 {
+                     var value = snapshot.Child(userName).Child("Token").Value;
+                     if (value.ToString() == UID)
+                     {
+                         DatabaseReference LevelRef = FirebaseDatabase.DefaultInstance.GetReference("Users").Child(userName);
+                         LevelRef.GetValueAsync().ContinueWith(task =>
+                         {
+                             if (task.IsCompleted)
+                             {
+                                 DataSnapshot shot = task.Result;
+                                 for (int i = 0; i < _levelName.Count; i++)
+                                 {
+                                     LevelData data = new LevelData();
+                                     data.LevelName = _levelName[i];
+                                     List<string> names = new List<string>();
+                                     foreach (DataSnapshot productSnapshot in shot.Child(_levelName[i]).Children)
+                                     {
+                                         string productName = productSnapshot.Key;
+                                         names.Add(productName);
+                                     }
+                                     data._productName = names;
+                                     _UserLevels.Add(data);
+
+                                     #region Commented but Important 
+                                     //if (shot.HasChild(_levelName[i]))
+                                     //{
+                                     //    LevelData data = new LevelData();
+                                     //    data.LevelName = _levelName[i];
+                                     //    List<string> names = new List<string>();
+                                     //    foreach (DataSnapshot productSnapshot in shot.Child(_levelName[i]).Children)
+                                     //    {
+                                     //        string productName = productSnapshot.Key;
+                                     //        names.Add(productName);
+                                     //    }
+                                     //    data._productName = names;
+                                     //    _UserLevels.Add(data);
+                                     //    levelsString.ProductsName = names;
+                                     //    Levels.Add(levelsString);
+                                     //}
+                                     //else
+                                     //{
+                                     //    Levels.Add(levelsString);
+                                     //}
+                                     #endregion
+                                 }
+                             }
+                         });
+                     }
+
+                 }
+             }
+         });
+
+     }
+    */
 
     #region Creating User Basic Data
     public void CreateUser(string id, string UID)
@@ -169,7 +211,7 @@ public class RealTimeDatabase : MonoBehaviour
     #endregion
 
     #region load Levels data on start... after login 
-    void LoadServerData()
+    public void LoadServerData()
     {
         int counter = 0;
         StartCoroutine(Load((string name) =>
@@ -415,7 +457,7 @@ public class RealTimeDatabase : MonoBehaviour
         }
     }
 
-    public void AddProduct(string LevelName, string ProductName, int Quantity,float Price, Levels _levels)
+    public void AddProduct(string LevelName, string ProductName, int Quantity, float Price, Levels _levels)
     {
         ProductData productData = new ProductData();
         productData._pName = ProductName;
@@ -424,7 +466,6 @@ public class RealTimeDatabase : MonoBehaviour
         string json = JsonUtility.ToJson(productData);
         reference.Child("Users").Child(_userID).Child("Levels").Child(LevelName).Child(ProductName).SetRawJsonValueAsync(json);
         //Add user Data Local
-        _levels.LevelName = LevelName;
         if (!LiveData.data.userData.Levels[0]._pName.Contains(productData))
         {
             _levels._pName.Add(productData);

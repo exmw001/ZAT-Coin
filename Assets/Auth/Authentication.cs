@@ -63,6 +63,7 @@ public class Authentication : MonoBehaviour
         Debug.Log("Setting up Firebase Auth");
         //Set the authentication instance object
         auth = FirebaseAuth.DefaultInstance;
+        RealTimeDatabase.instance.LoadServerData();
     }
 
     //Function for the login button
@@ -120,6 +121,7 @@ public class Authentication : MonoBehaviour
             //Now get the result
             User = LoginTask.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1}) ({2})", User.DisplayName, User.Email, User.UserId);
+            LiveData.data.userID = User.UserId;
             RealTimeDatabase.instance.RetrieveUserData(User.UserId, User.DisplayName);
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";

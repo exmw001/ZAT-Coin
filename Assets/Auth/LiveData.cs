@@ -30,7 +30,7 @@ public class LiveData : MonoBehaviour
     }
     private void Start()
     {
-        
+
     }
     /*private void Update()
     {
@@ -86,7 +86,6 @@ public class UserData
 [Serializable]
 public class Levels
 {
-    public String LevelName;
     public List<ProductData> _pName = new List<ProductData>();
 }
 [Serializable]
