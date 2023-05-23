@@ -3815,8 +3815,7 @@ MonoBehaviour:
   userData:
     Coins: 0
     Earnings: 0
-    Levels:
-    - _pName: []
+    Levels: []
     Token: 
 --- !u!4 &1863107133
 Transform:

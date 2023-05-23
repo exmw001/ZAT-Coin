@@ -592,7 +592,7 @@ public class GameManager : MonoBehaviour
             {
                 for (int j = 0; j < LiveData.data.DataList[_level]._Tex2D.Count; j++)
                 {
-                    if (LiveData.data.DataList[_level]._Tex2D[j]._productName == _userProductLocal[i].productName + ".png")
+                    if (LiveData.data.DataList[_level]._Tex2D[j]._productName == _userProductLocal[i].productName)
                     {
                         Baskets[Basket_idx].name = _level.ToString();
                         basket._productName = _userProductLocal[i].productName;
