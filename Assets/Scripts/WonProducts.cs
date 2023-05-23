@@ -7,20 +7,27 @@ public class WonProducts : MonoBehaviour
 {
     public static WonProducts instance;
 
-    public List<WonProductData> wonProductsName;
+    public List<WonProductData> wonProducts;
 
     private void Awake()
     {
-        if (instance == null)
+        if (!instance)
+        {
             instance = this;
-        DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
-    public void AddProduct(int _level,string sprite)
+    public void AddWonProduct(int _level, int productIdx, string productName)
     {
         WonProductData _WonProducts = new WonProductData();
         _WonProducts._Level = _level;
-        _WonProducts.ProductName = sprite;
-        wonProductsName.Add(_WonProducts);
+        _WonProducts._productIndex = productIdx;
+        _WonProducts.ProductName = productName;
+        wonProducts.Add(_WonProducts);
     }
 }

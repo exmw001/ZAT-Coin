@@ -425,8 +425,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 75b3b4b9831e5b24fb7c6a83be38353a, type: 3}
   - {fileID: 21300000, guid: 835f8680b086bb448987bc232cf62e00, type: 3}
   Products: []
+  ProductsTexture: []
+  _userProductLocal: []
   Next: {fileID: 21300000, guid: 4b1b2cb369e617d4fb1342ed9a6b7492, type: 3}
-  list: 
+  NextTexture: {fileID: 2800000, guid: 4b1b2cb369e617d4fb1342ed9a6b7492, type: 3}
+  listRandomBaskets: 
+  index_random_Basket: 
   _sprites: []
 --- !u!224 &323264770 stripped
 RectTransform:
@@ -569,7 +573,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 2210.0696
+  m_Mass: 982.25323
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -649,7 +653,7 @@ MonoBehaviour:
   Panel: {fileID: 1887915658}
   NextPanel: {fileID: 2003859010}
   PlayButton: {fileID: 1737036798}
-  prize: {fileID: 1025303359}
+  prize: {fileID: 0}
   scene_index: 0
   check: 0
 --- !u!1001 &578864966

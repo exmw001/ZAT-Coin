@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class ShopPanel : MonoBehaviour
 {
-    public Board board;
+    //public Board board;
     public Sprite[] BackgroundBG;
 
-    public List<Sprite> _sprites;
+    //public List<Sprite> _sprites;
     public GameObject prefab;
     public Transform parent;
     public Transform Wonparent;
@@ -20,7 +20,8 @@ public class ShopPanel : MonoBehaviour
     private void Start()
     {
         WonProduct.onClick.AddListener(ProductsWon);
-        switch (board)
+        ShowAllProducts();
+        /*switch (board)
         {
             case Board.Board1:
                 Board1();
@@ -36,23 +37,35 @@ public class ShopPanel : MonoBehaviour
                 break;
             default:
                 break;
-        }
+        }*/
     }
     private void Update()
     {
         remamingcoins.text = LiveData.data.userData.Coins.ToString();
     }
     #region Products
-    public void Board1()
+    private void ShowAllProducts()
     {
-        for (int i = 0; i < _sprites.Count; i++)
+        for (int i = 0; i < LiveData.data.DataList.Count; i++)//i is the product level
+        {
+            for (int j = 0; j < LiveData.data.DataList[i]._Tex2D.Count; j++) //j is the product that contain product texture and name
+            {
+                var v = Instantiate(prefab, parent);
+                v.GetComponent<Image>().sprite = BackgroundBG[i];
+                v.transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[i]._Tex2D[j]._productimage;
+                v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = LiveData.data.DataList[i]._Tex2D[j]._productName;
+            }
+        }
+
+        /*for (int i = 0; i < _sprites.Count; i++)
         {
             var v = Instantiate(prefab, parent);
             v.GetComponent<Image>().sprite = BackgroundBG[0];
             v.transform.GetChild(0).GetComponent<Image>().sprite = _sprites[i];
             v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _sprites[i].name;
-        }
+        }*/
     }
+    /*
 
     public void Board2()
     {
@@ -85,7 +98,7 @@ public class ShopPanel : MonoBehaviour
             v.transform.GetChild(0).GetComponent<Image>().sprite = _sprites[i];
             v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _sprites[i].name;
         }
-    }
+    }*/
     #endregion
 
     #region Won
@@ -95,13 +108,13 @@ public class ShopPanel : MonoBehaviour
     void ProductsWon()
     {
         ClearView();
-        products = WonProducts.instance.wonProductsName;
+        products = WonProducts.instance.wonProducts;
         length = products.Count;
+        WonBoard();
 
-        switch (board)
+        /*switch (board)
         {
             case Board.Board1:
-                WonBoard1();
                 break;
             case Board.Board2:
                 WonBoard2();
@@ -114,39 +127,38 @@ public class ShopPanel : MonoBehaviour
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
-    public void WonBoard1()
+    public void WonBoard()
     {
         for (int i = 0; i < length; i++)
         {
             var v = Instantiate(prefab, Wonparent);
-            v.GetComponent<Image>().sprite = BackgroundBG[products[i]._Level];
+            v.GetComponent<Image>().sprite = BackgroundBG[products[i]._Level];//Background Of the won Product 
 
-            for (int j = 0; j < LiveData.data.DataList[products[i]._Level]._Tex2D.Count; j++)
+            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].ProductName;
+            v.transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[products[i]._Level]._Tex2D[products[i]._productIndex]._productimage;
+
+
+            /*for (int j = 0; j < LiveData.data.DataList[products[i]._Level]._Tex2D.Count; j++)
             {
                 if (LiveData.data.DataList[products[i]._Level]._Tex2D[j]._productName == products[i].ProductName + ".png")
                 {
-                    Debug.Log("tag Level");
                     v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].ProductName;
                     v.transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[products[i]._Level]._Tex2D[j]._productimage;
                     break;
                 }
-            }
-            /*v.transform.GetChild(0).GetComponent<RawImage>().texture = LiveData.data.DataList[0]._Tex2D[j]._productimage;
-            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;*/
+            }*/
         }
     }
 
-    public void WonBoard2()
+    /*public void WonBoard2()
     {
         for (int i = 0; i < _sprites.Count; i++)
         {
             var v = Instantiate(prefab, Wonparent);
             v.GetComponent<Image>().sprite = BackgroundBG[1];
-            /*v.transform.GetChild(0).GetComponent<Image>().sprite = products[i];
-            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;*/
         }
     }
 
@@ -156,8 +168,6 @@ public class ShopPanel : MonoBehaviour
         {
             var v = Instantiate(prefab, Wonparent);
             v.GetComponent<Image>().sprite = BackgroundBG[2];
-            /*v.transform.GetChild(0).GetComponent<Image>().sprite = products[i];
-            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;*/
         }
     }
 
@@ -167,10 +177,8 @@ public class ShopPanel : MonoBehaviour
         {
             var v = Instantiate(prefab, Wonparent);
             v.GetComponent<Image>().sprite = BackgroundBG[3];
-            /*v.transform.GetChild(0).GetComponent<Image>().sprite = products[i];
-            v.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = products[i].name;*/
         }
-    }
+    }*/
 
     void ClearView()
     {
@@ -183,7 +191,7 @@ public class ShopPanel : MonoBehaviour
     public void ClearList()
     {
         ClearView();
-        WonProducts.instance.wonProductsName.Clear();
+        WonProducts.instance.wonProducts.Clear();
     }
 
     #endregion

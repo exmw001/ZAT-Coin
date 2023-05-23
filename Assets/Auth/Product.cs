@@ -20,33 +20,17 @@ public class Product : MonoBehaviour
     {
         button.onClick.AddListener(AddProduct);
     }
-    void Start()
-    {
-        //transform.GetChild(0).GetComponent<Text>().text = _pName;
-    }
 
     void AddProduct()
     {
-        if (image.texture != null && Price.text != null && Quantity.text != null)
+        Debug.Log(Price.text);
+        float _price = float.Parse(Price.text);
+        int _quantity = int.Parse(Quantity.text);
+        if (image.texture != null && _price > 0f && _quantity > 0)
         {
             RealTimeDatabase.instance.ProductAddCounter++;
             button.interactable = false;
-            RealTimeDatabase.instance.AddProduct(LevelName, _pName, int.Parse(Quantity.text), float.Parse(Price.text), levels);
+            RealTimeDatabase.instance.AddProduct(LevelName, _pName, _quantity, _price, levels);
         }
     }
-
-    /*public void GetImage(string URL)
-    {
-        StartCoroutine(DownloadImage(URL));
-    }*/
-
-    /*IEnumerator DownloadImage(string MediaUrl)
-    {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);
-        yield return request.SendWebRequest();
-        if (request.isNetworkError || request.isHttpError)
-            Debug.Log(request.error);
-        else
-            image.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-    }*/
 }

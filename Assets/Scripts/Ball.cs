@@ -12,7 +12,7 @@ public class Ball : MonoBehaviour
     public GameObject Panel, NextPanel, PlayButton;
     public RawImage prize;
     public int scene_index;
-    
+
 
     private void Awake()
     {
@@ -64,19 +64,20 @@ public class Ball : MonoBehaviour
                 NextPanel.SetActive(true);
                 StartCoroutine(LoadScene());
             }
-            else if ((collision.tag == "Level1" || collision.tag == "Level2" || collision.tag == "Level3" || collision.tag == "Level4" || collision.tag == "Level5" || collision.tag == "Level6" || collision.tag == "Level7" || collision.tag == "Level8") && trigger)
+            else if ((collision.CompareTag("Level1") || collision.CompareTag("Level2") || collision.CompareTag("Level3") || collision.CompareTag("Level4") || collision.CompareTag("Level5") || collision.CompareTag("Level6") || collision.CompareTag("Level7") || collision.CompareTag("Level8")) && trigger)
             {
                 trigger = false;
                 TableSoundCheck();
+
+                Basket basket = collision.transform.parent.gameObject.GetComponent<Basket>();
+                Panel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Ganhou 1 " + basket._productName;
+                prize.texture = LiveData.data.DataList[basket.productLevel]._Tex2D[basket.productIndex]._productimage;
+
+                WonProducts.instance.AddWonProduct(basket.productLevel, basket.productIndex, basket._productName);
+                RealTimeDatabase.instance.PushWonProduct(basket._productName, basket.productPrice);
                 StartCoroutine(Won());
-                Panel.transform.GetChild(2).GetComponent<Text>().text = "Ganhou 1 " + collision.transform.parent.GetChild(1).gameObject.GetComponent<TextMeshPro>().text;
-                    //prize.transform.parent.GetChild(1).gameObject.GetComponent<TextMesh>().text;
-                prize.texture = collision.GetComponent<Texture>();
-                int lvl = int.Parse(prize.transform.parent.GetChild(1).name);
-                WonProducts.instance.AddProduct(lvl, prize.transform.parent.GetChild(1).gameObject.GetComponent<TextMesh>().text);
                 soundName = collision.tag;
             }
-
         }
     }
 
@@ -84,7 +85,6 @@ public class Ball : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Panel.SetActive(true);
-        //RealTimeDatabase.instance.subtractCoin();
         LiveData.data.subtractCoin();
         if (LiveData.data.userData.Coins > 0)
         {

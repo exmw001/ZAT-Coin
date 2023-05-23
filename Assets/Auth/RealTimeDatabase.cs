@@ -82,6 +82,7 @@ public class RealTimeDatabase : MonoBehaviour
     #endregion
     public void RetrieveUserData(string UID, string userName)
     {
+        loading.SetActive(true);
         FirebaseDatabase.DefaultInstance.RootReference.Child("Users").Child(UID).GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsFaulted)
@@ -223,6 +224,7 @@ public class RealTimeDatabase : MonoBehaviour
             _product.GetComponent<Product>().name = _p._productName[i];
             _product.GetComponent<Product>()._pName = _p._productName[i];
             _product.GetComponent<Product>().LevelName = _p.LevelName;
+            
             _product.GetComponent<Product>().levels = _levels;
             if (_p._Tex2D[i]._productimage != null)
                 _product.GetComponent<Product>().image.texture = _p._Tex2D[i]._productimage;
@@ -418,6 +420,23 @@ public class RealTimeDatabase : MonoBehaviour
         }
         //reference.Child("Users").Child(_userID).Child(LevelName).SetRawJsonValueAsync(json);
     }
+    #region Push Won Product and update earning
+    public void PushWonProduct(string pName, float price)
+    {
+        // Create new entry at /user-scores/$userid/$scoreid and at
+        // /leaderboard/$scoreid simultaneously
+        string key = reference.Child("Users").Child(LiveData.data.userID).Child("WonProducts").Key;
+        ProductWonEarning entry = new ProductWonEarning(pName, price);
+        Dictionary<string, System.Object> entryValues = entry.ToDictionary();
+
+        Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
+        childUpdates["/product/" + key] = entryValues;
+
+        reference.Child("Users").Child(LiveData.data.userID).Child("WonProducts").(childUpdates);
+
+    }
+
+    #endregion
 
     #region Commented
     //public void SaveData()

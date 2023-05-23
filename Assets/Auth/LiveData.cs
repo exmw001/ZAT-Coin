@@ -28,23 +28,6 @@ public class LiveData : MonoBehaviour
         }
         #endregion
     }
-    private void Start()
-    {
-
-    }
-    /*private void Update()
-    {
-        if (DataList[0]._productimage.Count > 12 && !cals)
-        {
-            cals = true;
-            _Image.texture = DataList[0]._productimage[11];
-            _Image.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0.5f);
-            _Image.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0, 0.5f);
-            _Image.SetNativeSize();
-            
-            
-        }
-    }*/
     public void subtractCoin()
     {
         reference = FirebaseDatabase.DefaultInstance.RootReference;
@@ -89,6 +72,28 @@ public class Levels
     public List<ProductData> _pName = new List<ProductData>();
 }
 [Serializable]
+public class ProductWonEarning
+{
+    private string pName;
+    public float price = 0;
+
+    public ProductWonEarning(string pName, float price)
+    {
+        this.pName = pName;
+        this.price = price;
+    }
+
+    public Dictionary<string, System.Object> ToDictionary()
+    {
+        Dictionary<string, System.Object> result = new Dictionary<string, System.Object>();
+        result["product"] = pName;
+        result["price"] = price;
+
+        return result;
+    }
+
+}
+[Serializable]
 public class ProductData
 {
     public string _pName;
@@ -112,5 +117,6 @@ public class Tex2D
 public class WonProductData
 {
     public int _Level;
+    public int _productIndex;
     public String ProductName;
 }
