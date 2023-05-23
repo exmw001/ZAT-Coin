@@ -25,11 +25,14 @@ public class Product : MonoBehaviour
     {
         Debug.Log(Price.text);
         float _price = float.Parse(Price.text);
+
+        _price = Mathf.Round(_price * 100) * 0.01f;
+        Debug.Log(Price);
         int _quantity = int.Parse(Quantity.text);
         if (image.texture != null && _price > 0f && _quantity > 0)
         {
             RealTimeDatabase.instance.ProductAddCounter++;
-            button.interactable = false;
+            //button.interactable = false;
             RealTimeDatabase.instance.AddProduct(LevelName, _pName, _quantity, _price, levels);
         }
     }

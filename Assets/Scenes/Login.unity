@@ -3816,13 +3816,7 @@ MonoBehaviour:
     Coins: 0
     Earnings: 0
     Levels:
-    - _pName:
-      - _pName: 
-        Quantity: 0
-        Price: 0
-      - _pName: 
-        Quantity: 0
-        Price: 0
+    - _pName: []
     Token: 
 --- !u!4 &1863107133
 Transform:

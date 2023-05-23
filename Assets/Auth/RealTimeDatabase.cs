@@ -60,13 +60,6 @@ public class RealTimeDatabase : MonoBehaviour
             //ReadData();
         }));*/
     }
-
-    public void subtractCoin()
-    {
-        LiveData.data.userData.Coins--;
-        reference.Child(LiveData.data.userID).SetValueAsync(LiveData.data.userData.Coins);
-        ReadData();
-    }
     IEnumerator GetValue(/*Action<string> oncallback*/)
     {
         var value = reference.Child("Users").Child(LiveData.data.userID).Child("Coins").GetValueAsync();
@@ -224,7 +217,7 @@ public class RealTimeDatabase : MonoBehaviour
             _product.GetComponent<Product>().name = _p._productName[i];
             _product.GetComponent<Product>()._pName = _p._productName[i];
             _product.GetComponent<Product>().LevelName = _p.LevelName;
-            
+
             _product.GetComponent<Product>().levels = _levels;
             if (_p._Tex2D[i]._productimage != null)
                 _product.GetComponent<Product>().image.texture = _p._Tex2D[i]._productimage;
@@ -414,6 +407,7 @@ public class RealTimeDatabase : MonoBehaviour
                 {
                     _levels._pName[i]._pName = productData._pName;
                     _levels._pName[i].Quantity = productData.Quantity;
+                    _levels._pName[i].Price = productData.Price;
                     break;
                 }
             }
@@ -423,17 +417,27 @@ public class RealTimeDatabase : MonoBehaviour
     #region Push Won Product and update earning
     public void PushWonProduct(string pName, float price)
     {
-        // Create new entry at /user-scores/$userid/$scoreid and at
-        // /leaderboard/$scoreid simultaneously
-        string key = reference.Child("Users").Child(LiveData.data.userID).Child("WonProducts").Key;
-        ProductWonEarning entry = new ProductWonEarning(pName, price);
-        Dictionary<string, System.Object> entryValues = entry.ToDictionary();
+        reference.Child("Users").Child(LiveData.data.userID).Child("Earnings").GetValueAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsFaulted)
+            {
+                // Handle the error...
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                LiveData.data.userData.Earnings = Int16.Parse(snapshot.Value.ToString());
+                LiveData.data.userData.Earnings += price;
+                //update earning 
+                reference.Child("Users").Child(LiveData.data.userID).Child("Earnings").SetValueAsync(LiveData.data.userData.Earnings);
+                //post won product
+                ProductWonEarning entry = new ProductWonEarning(pName, price);
+                Dictionary<string, System.Object> entryValues = entry.ToDictionary();
+                reference.Child("Users").Child(LiveData.data.userID).Child("WonProducts").Push().SetValueAsync(entryValues);
+                //subtract product that won
 
-        Dictionary<string, System.Object> childUpdates = new Dictionary<string, System.Object>();
-        childUpdates["/product/" + key] = entryValues;
-
-        reference.Child("Users").Child(LiveData.data.userID).Child("WonProducts").(childUpdates);
-
+            }
+        });
     }
 
     #endregion
@@ -460,9 +464,4 @@ public class RealTimeDatabase : MonoBehaviour
     #endregion
 }
 
-[System.Serializable]
-public class LevelData
-{
-    public String LevelName;
-    public List<string> _productName;
-}
+

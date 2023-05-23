@@ -35,6 +35,10 @@ public class LiveData : MonoBehaviour
         reference.Child("Users").Child(userID).Child("Coins").SetValueAsync(userData.Coins);
         ReadData();
     }
+    public void SubtractProduct(string productName)
+    { 
+
+    }
     void ReadData()
     {
         StartCoroutine(GetValue());//(string Coin) =>
@@ -62,7 +66,7 @@ public class LiveData : MonoBehaviour
 public class UserData
 {
     public int Coins;
-    public int Earnings;
+    public float Earnings;
     public List<Levels> Levels = new List<Levels>();
     public string Token;
 }
@@ -91,7 +95,6 @@ public class ProductWonEarning
 
         return result;
     }
-
 }
 [Serializable]
 public class ProductData
@@ -119,4 +122,10 @@ public class WonProductData
     public int _Level;
     public int _productIndex;
     public String ProductName;
+}
+[System.Serializable]
+public class LevelData
+{
+    public String LevelName;
+    public List<string> _productName;
 }

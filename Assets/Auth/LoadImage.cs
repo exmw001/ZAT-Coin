@@ -24,17 +24,18 @@ public class LoadImage : MonoBehaviour
     #region Load image as Sprite...
     public void LoopFunction_GetSprite(string LevelName, string ChildName, Data data, UnityEvent @event)
     {
-        GetSprite(LevelName, ChildName + ".png", data,@event);
+        GetSprite(LevelName, ChildName, data, @event);
     }
     void GetSprite(string LevelName, string ChildName, Data data, UnityEvent @event)
     {
         Debug.Log(LevelName + "/" + ChildName);
-        StorageReference image = storageReference.Child(LevelName + "/" + ChildName);
+        string _name = ChildName + ".png";
+        StorageReference image = storageReference.Child(LevelName + "/" + _name);
         image.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
         {
             if (!task.IsFaulted && !task.IsCanceled)
             {
-                StartCoroutine(_LoadSprite(Convert.ToString(task.Result),ChildName, data, @event));
+                StartCoroutine(_LoadSprite(Convert.ToString(task.Result), ChildName, data, @event));
             }
             else
             {
@@ -42,7 +43,7 @@ public class LoadImage : MonoBehaviour
             }
         });
     }
-    IEnumerator _LoadSprite(string MediaUrl,string productName, Data data ,UnityEvent @event)
+    IEnumerator _LoadSprite(string MediaUrl, string productName, Data data, UnityEvent @event)
     {
         Debug.Log(MediaUrl);
         Tex2D tex2D = new Tex2D(); ;

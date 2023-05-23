@@ -76,6 +76,7 @@ public class Ball : MonoBehaviour
                 WonProducts.instance.AddWonProduct(basket.productLevel, basket.productIndex, basket._productName);
                 RealTimeDatabase.instance.PushWonProduct(basket._productName, basket.productPrice);
                 StartCoroutine(Won());
+                LiveData.data.SubtractProduct(basket._productName);
                 soundName = collision.tag;
             }
         }

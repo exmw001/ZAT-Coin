@@ -83,11 +83,14 @@ public class GameManager : MonoBehaviour
                 Rand = Random.Range(0, LiveData.data.userData.Levels[0]._pName.Count);
             }
             vs.Add(Rand);
-            UserProductLocal userProduct = new UserProductLocal();
-            userProduct.productName = LiveData.data.userData.Levels[0]._pName[Rand]._pName;
-            userProduct.Price = LiveData.data.userData.Levels[0]._pName[Rand].Price;
-            userProduct.ProductLevel = 0;
+            UserProductLocal userProduct = new UserProductLocal
+            {
+                productName = LiveData.data.userData.Levels[0]._pName[Rand]._pName,
+                Price = LiveData.data.userData.Levels[0]._pName[Rand].Price,
+                ProductLevel = 0
+            };
             _userProductLocal.Add(userProduct);
+
             //ProductsTexture.Add(LiveData.data.DataList[0]._productimage[vs[i]]);
         }
 
