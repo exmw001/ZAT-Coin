@@ -426,8 +426,10 @@ public class RealTimeDatabase : MonoBehaviour
             else if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
-                LiveData.data.userData.Earnings = Int16.Parse(snapshot.Value.ToString());
-                LiveData.data.userData.Earnings += price;
+                float _tempE = Int16.Parse(snapshot.Value.ToString());
+                Debug.Log(_tempE);
+                _tempE += price;
+                LiveData.data.userData.Earnings = _tempE;
                 //update earning 
                 reference.Child("Users").Child(LiveData.data.userID).Child("Earnings").SetValueAsync(LiveData.data.userData.Earnings);
                 //post won product
