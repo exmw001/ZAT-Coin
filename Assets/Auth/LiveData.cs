@@ -80,11 +80,11 @@ public class LiveData : MonoBehaviour
             float _tempE = float.Parse(snapshot.Value.ToString());
             userData.Earnings += _tempE;
 
-            reference.Child("Users").Child(userID).Child("Earnings").SetValueAsync(userData.Earnings);
+            FirebaseDatabase.DefaultInstance.RootReference.Child("Users").Child(userID).Child("Earnings").SetValueAsync(userData.Earnings);
             //post won product
             ProductWonEarning entry = new ProductWonEarning(pName, price);
             Dictionary<string, System.Object> entryValues = entry.ToDictionary();
-            reference.Child("Users").Child(userID).Child("WonProducts").Push().SetValueAsync(entryValues);
+            FirebaseDatabase.DefaultInstance.RootReference.Child("Users").Child(userID).Child("WonProducts").Push().SetValueAsync(entryValues);
             //subtract product that won
         }
     }
