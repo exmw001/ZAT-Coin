@@ -1,12 +1,9 @@
 using Firebase.Database;
-using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Application;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using Firebase.Extensions;
@@ -414,35 +411,7 @@ public class RealTimeDatabase : MonoBehaviour
         }
         //reference.Child("Users").Child(_userID).Child(LevelName).SetRawJsonValueAsync(json);
     }
-    #region Push Won Product and update earning
-    public void PushWonProduct(string pName, float price)
-    {
-        reference.Child("Users").Child(LiveData.data.userID).Child("Earnings").GetValueAsync().ContinueWithOnMainThread(task =>
-        {
-            if (task.IsFaulted)
-            {
-                // Handle the error...
-            }
-            else if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-                float _tempE = Int16.Parse(snapshot.Value.ToString());
-                Debug.Log(_tempE);
-                _tempE += price;
-                LiveData.data.userData.Earnings = _tempE;
-                //update earning 
-                reference.Child("Users").Child(LiveData.data.userID).Child("Earnings").SetValueAsync(LiveData.data.userData.Earnings);
-                //post won product
-                ProductWonEarning entry = new ProductWonEarning(pName, price);
-                Dictionary<string, System.Object> entryValues = entry.ToDictionary();
-                reference.Child("Users").Child(LiveData.data.userID).Child("WonProducts").Push().SetValueAsync(entryValues);
-                //subtract product that won
-
-            }
-        });
-    }
-
-    #endregion
+    
 
     #region Commented
     //public void SaveData()

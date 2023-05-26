@@ -60,6 +60,36 @@ public class LiveData : MonoBehaviour
             //oncallback.Invoke(snapshot.Value.ToString());
         }
     }
+    #region Push Won Product and update earning
+    string pName;
+    float price;
+    public void PushWonProduct(string pName, float price)
+    {
+        this.pName = pName;
+        this.price = price;
+        StartCoroutine(PushWonProductCo());
+    }
+    IEnumerator PushWonProductCo(/*Action<string> oncallback*/)
+    {
+        var value = FirebaseDatabase.DefaultInstance.RootReference.Child("Users").Child(userID).Child("Earnings").GetValueAsync();
+        yield return new WaitUntil(predicate: () => value.IsCompleted);
+
+        if (value != null)
+        {
+            DataSnapshot snapshot = value.Result;
+            float _tempE = float.Parse(snapshot.Value.ToString());
+            userData.Earnings += _tempE;
+
+            reference.Child("Users").Child(userID).Child("Earnings").SetValueAsync(userData.Earnings);
+            //post won product
+            ProductWonEarning entry = new ProductWonEarning(pName, price);
+            Dictionary<string, System.Object> entryValues = entry.ToDictionary();
+            reference.Child("Users").Child(userID).Child("WonProducts").Push().SetValueAsync(entryValues);
+            //subtract product that won
+        }
+    }
+
+    #endregion
 }
 
 [Serializable]
@@ -121,6 +151,7 @@ public class WonProductData
 {
     public int _Level;
     public int _productIndex;
+    public float price;
     public String ProductName;
 }
 [System.Serializable]

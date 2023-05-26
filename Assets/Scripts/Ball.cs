@@ -72,9 +72,9 @@ public class Ball : MonoBehaviour
                 Basket basket = collision.transform.parent.gameObject.GetComponent<Basket>();
                 Panel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Ganhou 1 " + basket._productName;
                 prize.texture = LiveData.data.DataList[basket.productLevel]._Tex2D[basket.productIndex]._productimage;
-
-                WonProducts.instance.AddWonProduct(basket.productLevel, basket.productIndex, basket._productName);
-                RealTimeDatabase.instance.PushWonProduct(basket._productName, basket.productPrice);
+                Debug.Log("basket.productPrice" + basket.productPrice);
+                LiveData.data.PushWonProduct(basket._productName, basket.productPrice);
+                WonProducts.instance.AddWonProduct(basket.productLevel, basket.productIndex, basket._productName, basket.productPrice);
                 StartCoroutine(Won());
                 LiveData.data.SubtractProduct(basket._productName);
                 soundName = collision.tag;

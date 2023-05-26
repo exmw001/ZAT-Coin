@@ -22,12 +22,15 @@ public class WonProducts : MonoBehaviour
         }
     }
 
-    public void AddWonProduct(int _level, int productIdx, string productName)
+    public void AddWonProduct(int _level, int productIdx, string productName, float price)
     {
-        WonProductData _WonProducts = new WonProductData();
-        _WonProducts._Level = _level;
-        _WonProducts._productIndex = productIdx;
-        _WonProducts.ProductName = productName;
+        WonProductData _WonProducts = new WonProductData
+        {
+            _Level = _level,
+            _productIndex = productIdx,
+            ProductName = productName,
+            price = price
+        };
         wonProducts.Add(_WonProducts);
     }
 }
