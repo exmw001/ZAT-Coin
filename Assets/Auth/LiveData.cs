@@ -27,16 +27,34 @@ public class LiveData : MonoBehaviour
             Destroy(this.gameObject);
         }
         #endregion
+        
     }
+    #region Coin Handler
+    public void CoinChange()
+    {
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
+        reference.Child("Users").Child(userID).Child("Coins").ValueChanged += HandleValueChanged;
+    }
+    void HandleValueChanged(object sender, ValueChangedEventArgs args)
+    {
+        if (args.DatabaseError != null)
+        {
+            Debug.LogError(args.DatabaseError.Message);
+            return;
+        }
+        ReadData();
+        // Do something with the data in args.Snapshot
+    }
+    #endregion
     public void subtractCoin()
     {
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         userData.Coins--;
         reference.Child("Users").Child(userID).Child("Coins").SetValueAsync(userData.Coins);
-        ReadData();
+        //ReadData();
     }
     public void SubtractProduct(string productName)
-    { 
+    {
 
     }
     void ReadData()

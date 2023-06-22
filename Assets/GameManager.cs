@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        LiveData.data.CoinChange();
         AudioManager.instance.Stop();
 
         if (scene_index > 0)
